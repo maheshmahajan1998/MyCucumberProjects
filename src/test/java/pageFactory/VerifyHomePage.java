@@ -41,13 +41,13 @@ public class VerifyHomePage {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
-	public void verify_the_title_as_computers_database() {
+	public void verifyTheTitle() {
 		String title = driver.getTitle();
 		String expectedTitle = "Computers database";
 		assertEquals(expectedTitle,title);
 	}
 
-	public void verify_the_page_header_is_the_same_as_the_page_title() {
+	public void verifyThePageHeaderIsSameAsThePage_title() {
 		String pageHeader = check_header.getText();
 		String pageTitle = driver.getTitle();
 		System.out.println(pageHeader);
@@ -60,24 +60,24 @@ public class VerifyHomePage {
 		}
 	}
 
-	public boolean check_filter_by_name() {
+	public boolean filterByNnameText() {
 		return filter_by_computer.isDisplayed();
 	}
 
-	public boolean user_able_to_see_add_a_new_computer_button() {
+	public boolean addNewComputer() {
 
 		return add_new_computer.isDisplayed();
 	}
 
-	public boolean user_able_to_see_the_filter_by_name_button() {
+	public boolean filterByNameBtn() {
 
 		return filter_by_name_btn.isDisplayed();
 	}
 
-	public boolean user_able_to_see_the_table_and_the_headers_as_follows() {
+	public boolean tableIsPresent() {
 		return table.isDisplayed();
 	}
-	public boolean the_user_should_see_the_pagination() {
+	public boolean seeThePagination() {
 
 		return pagination.isDisplayed();
 	}

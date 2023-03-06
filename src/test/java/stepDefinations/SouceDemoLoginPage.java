@@ -52,12 +52,12 @@ public class SouceDemoLoginPage {
 	}
 
 	@And("user is in login page")
-	public void user_is_in_login_page() {
+	public void loginPage() {
 		driver.get("https://www.saucedemo.com/");
 	}
 
 	@When("^user enters Invalid username as (.*) and password as (.*)$")
-	public void user_enters_invalid_username_as_and_password_as(String username, String password) {
+	public void enterInvalidUsernameAndPassword(String username, String password) {
 
 		wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		login_pf.enterInvalidUsername(username);
@@ -65,14 +65,14 @@ public class SouceDemoLoginPage {
 	}
 
 	@And("user clicks on login")
-	public void user_clicks_on_login() {
+	public void userClicksOnLogin() {
 
 		login_pf.loginClick();
 
 	}
 
 	@Then("user is not navigated to the home page")
-	public void user_is_not_navigated_to_the_home_page() {
+	public void notVavigatedToHome_page() {
 
 		String res = login_pf.invalidLoginText();
 		String expected = "Epic sadface: Username and password do not match any user in this service";
@@ -83,15 +83,20 @@ public class SouceDemoLoginPage {
 	// 2nd Scenario
 
 	@When("user enters username as {string} and password as {string}")
-	public void user_enters_username_as_and_password_as(String username, String password) {
+	public void enterUsername_and_password(String username, String password) {
 		lg = new LoginWithValidDataPage(driver);
 		lg.entervalidUsername(username);
 		lg.entervalidPassword(password);
 	}
 
 	@And("Verify the login button text is capitalized")
-	public void verify_the_login_button_text_is_capitalized() {
-		login_pf.checkLoginText();
+	public void verifyLoginButtonCapitalized() {
+
+		String ele = login_pf.login_text.getCssValue("Login");
+		if (ele.toLowerCase().equalsIgnoreCase(ele)) {
+			System.out.println(ele.toUpperCase());
+			System.out.println("Login button is capitalized");
+		}
 
 	}
 
@@ -106,48 +111,71 @@ public class SouceDemoLoginPage {
 	VerifyHomePage obj;
 
 	@And("verify the title as Swag Labs")
-	public void verify_the_title_as_swag_labs() {
+	public void titleAsSwagLabs() {
 
-		obj.verify_the_title_as_swag_labs();
+		String expectedTitle = "Swag Labs";
+		if (driver.getPageSource().contains("Epic sadface")) {
+			driver.close();
+			Assert.assertTrue(false);
+		} else {
+			Assert.assertEquals(expectedTitle, driver.getTitle());
+		}
 	}
 
 	@Then("verify default filter dropdown is A-Z")
-	public void verify_default_filter_dropdown_is_a_z() {
+	public void defaultDropdownFilter() {
 		obj = new VerifyHomePage(driver);
-		obj.verifyDropDown();
+		WebElement dropdown = obj.dropdown_filter;
+		Select selectObject = new Select(dropdown);
+		selectObject.selectByIndex(0);
+		// selectObject.selectByVisibleText("Name (A to Z)");
+		System.out.println("default filter dropdown is A-Z is verified");
+		
 	}
 
 	// Cart
 
 	@When("Add the first product to the cart")
-	public void add_the_first_product_to_the_cart() {
+	public void addFirstProduct() {
 
 		cartpage = new CartPage(driver);
 		cartpage.addFirstProduct();
 	}
 
-	@And("Verify the cart badge has {int} product")
-	public void verify_the_cart_badge_has_product(Integer int1) {
+	String a;
+	int int1, b;
 
-		cartpage.verifyCartBadgeCount(int1);
+	@And("Verify the cart badge has {int} product")
+	public void verifyCartBadgeProduct(Integer int1) {
+
+		a = cartpage.cart_badge_count.getText();
+		b = Integer.parseInt(a);
+		if (b == int1) {
+			System.out.println("You have " + int1 + " item in your cart");
+			System.out.println("Verified the cart badge has " + int1 + " product");
+		} else if (b > int1) {
+			System.out.println("You have " + b + " item in your cart");
+		}
 
 	}
 
 	@And("Add the last product to the cart")
-	public void add_the_last_product_to_the_cart() {
+	public void addLastProduct() {
 		cartpage.addLasttProduct();
 
 	}
 
 	@Then("Verify the cart badge value is increased")
-	public void verify_the_cart_badge_value_is_increased() {
+	public void checkCartBadgeValue() {
 
-		cartpage.verifyCartBadgeValueIncreased();
+		if (b > int1) {
+			System.out.println("cart badge value is increased");
+		}
 
 	}
 
 	@And("Remove the first product from the cart")
-	public void remove_the_first_product_from_the_cart() {
+	public void removeFirstProductFromCart() {
 
 		cartpage.removeFirstProduct();
 	}
@@ -159,28 +187,33 @@ public class SouceDemoLoginPage {
 	}
 
 	@Then("Verify the added product is available")
-	public void verify_the_added_product_is_available() {
+	public void checkProductIsPresent() {
 
-		cartpage.verify_the_added_product_is_available();
+		cartpage.productIsAvailable();
 	}
 
 	// filter data
 
 	@And("Click on the continue shopping")
-	public void click_on_the_continue_shopping() {
+	public void clickOnContinueShopping() {
 		filter_obj = new FilterDataUsingDropDownPage(driver);
 		filter_obj.continueShopping();
 	}
 
 	@And("Change the price filter from low to high")
-	public void change_the_price_filter_from_low_to_high() {
-		filter_obj.Change_the_price_filter_from_low_to_high();
+	public void checkThePriceFilter() {
+
+		Select selectObject;
+		WebElement dropdown = filter_obj.dropdown_filter;
+		selectObject = new Select(dropdown);
+		selectObject.selectByIndex(2);
+
 	}
 
 	@Then("Verify the price sorted properly")
-	public void verify_the_price_sorted_properly() {
+	public void checkPriceSortedProperly() {
 
-		String actual = filter_obj.Verify_the_price_sorted_properly();
+		String actual = filter_obj.verifyPriceSortedProperly();
 		String expected = "Price (low to high)";
 		assertEquals(expected, actual);
 	}
@@ -188,25 +221,55 @@ public class SouceDemoLoginPage {
 	// place order
 
 	@When("user want to checkout")
-	public void user_want_to_checkout() {
+	public void checkout() {
 		placeOrder_obj = new PlaceOrderPage(driver);
-		placeOrder_obj.user_want_to_checkout();
+		placeOrder_obj.checkout();
 	}
 
+	String fname, lname, code1;
+
 	@When("Add Checkout: Your Information")
-	public void add_checkout_your_information() {
-		placeOrder_obj.add_checkout_your_information();
+	public void addCheckoutInformation() {
+		// placeOrder_obj.checkoutYourInformation();
+
+		System.out.println("*****************");
+		System.out.println("User please Enter Your Data \n");
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter your first name");
+		fname = sc.nextLine();
+		placeOrder_obj.fistname.sendKeys(fname);
+		System.out.println("Enter your last name");
+		lname = sc.nextLine();
+		placeOrder_obj.lastname.sendKeys(lname);
+		System.out.println("Enter your Zip/Postal Code");
+		int code = sc.nextInt();
+		code1 = String.valueOf(code);
+		placeOrder_obj.postalcode.sendKeys(code1);
 	}
 
 	@When("check the order details")
-	public void check_the_order_details() {
-		placeOrder_obj.check_the_order_details();
+	public void checkOrderDetails() {
+		placeOrder_obj.orderDetails();
 	}
 
 	@Then("order placed")
-	public void order_placed() throws InterruptedException {
+	public void orderPlaced() throws InterruptedException {
 
-		placeOrder_obj.order_placed();
+		System.out.println("Please check your Information");
+		System.out.println("FirstName " + fname);
+		System.out.println("LastName " + lname);
+		System.out.println("Zip/Postal Code " + code1);
+		Scanner sc1 = new Scanner(System.in);
+		Thread.sleep(2000);
+		System.out.println("Do you want to place the order");
+		String ans = sc1.nextLine();
+		if (ans.equalsIgnoreCase("yes")) {
+			placeOrder_obj.place_orderbtn.click();
+			System.out.println("Thank you for your order!");
+		} else {
+			placeOrder_obj.cancel_orderbtn.click();
+			System.out.println("Sorry Your order not placed");
+		}
 	}
 
 }

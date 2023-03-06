@@ -25,25 +25,19 @@ public class FilterDataUsingDropDownPage {
 	
 
 	@FindBy(xpath = "//select[@class='product_sort_container']")
-	WebElement verify_dropdown_filter;
+	public
+	WebElement dropdown_filter;
 
 	@FindBy(xpath = "//option[@value='lohi']")
-	WebElement check_price_low_to_high_btn;
+	WebElement fetch_price;
 	
 	public void continueShopping()
 	{
 		continue_shoppingbtn.click();
 	}
-	Select selectObject;
-	public void Change_the_price_filter_from_low_to_high() {
-		WebElement dropdown = verify_dropdown_filter;
-		 selectObject = new Select(dropdown);
-		selectObject.selectByIndex(2);	
-	}
 	
-	public String Verify_the_price_sorted_properly()
+	public String verifyPriceSortedProperly()
 	{
-		return check_price_low_to_high_btn.getText();
-		 
+		return fetch_price.getText();	 
 	}
 }

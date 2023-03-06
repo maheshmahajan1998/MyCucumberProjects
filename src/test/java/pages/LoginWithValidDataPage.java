@@ -50,14 +50,7 @@ WebDriver driver;
 		
 		txt_login.click();
 	}
-	public void checkLoginText()
-	{
-		String ele = login_text.getCssValue("Login");
-		if (ele.toLowerCase().equalsIgnoreCase(ele)) {
-			System.out.println(ele.toUpperCase());
-			System.out.println("Login button is capitalized");
-		}
-	}
+	
 
 	public void clickToggle_Menu()
 	{

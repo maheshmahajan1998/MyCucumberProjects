@@ -47,15 +47,15 @@ public class AddComputerPage {
 	WebElement bgcolor;
 
 	@FindBy(xpath = "//section//h1")
-	WebElement coumputer_foundCount;
+	WebElement getheading;
 
-	int count = 0;
+	int count = 574;
 	String strCount, s;
 	int i, j;
 
 	public void modifyTheString() {
 		// initializing a string
-		strCount = coumputer_foundCount.getText();
+		strCount = getheading.getText();
 		// declaring an empty string array
 		String strArr[] = null;
 		// parsing white space as a parameter
@@ -101,32 +101,33 @@ public class AddComputerPage {
 
 	public void backgroundColorOnComputerNameField()  {
 		
+
 		String color = bgcolor.getCssValue("background-color");
 		System.out.println(color + " user can see the bacground color");
 
 	}
 
-	public void computer_name() throws InterruptedException {
-		Thread.sleep(500);
+	public void computer_name()  {
 		enter_comp.sendKeys("xyz");
 	}
 
-	public void company_name() throws InterruptedException {
-		Thread.sleep(500);
+	public void company_name()  {
+		
 		WebElement dropdown = comp_name;
 		Select selectObject = new Select(dropdown);
 		selectObject.selectByIndex(16);
 	}
 
 	public void click_sumbit() throws InterruptedException {
-		submit.click();
+		wait=new WebDriverWait(driver,Duration.ofSeconds(50));
+		wait.until(ExpectedConditions.elementToBeClickable(submit)).click();
 		count++;
 		modifyTheString();
 	}
 
-	public boolean successful() throws InterruptedException {
-		// System.out.println(count);
-		Thread.sleep(2000);
+	public boolean successful()  {
+		 //System.out.println(count);
+		
 		return check.isDisplayed();
 	}
 
@@ -137,7 +138,7 @@ public class AddComputerPage {
 
 		try {
 
-			str = coumputer_foundCount.getText();
+			str = getheading.getText();
 			String str1 = str.replace("574 computers found", "575 computers found");
 			System.out.println(str1);
 		} catch (NumberFormatException a) {

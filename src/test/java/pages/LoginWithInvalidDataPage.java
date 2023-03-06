@@ -33,6 +33,7 @@ public class LoginWithInvalidDataPage {
 	WebElement txt_login;
 	
 	@FindBy(css = "#login-button")
+	public
 	WebElement login_text;
 	
 	@FindBy(xpath ="//h3[@data-test='error']" )
@@ -45,27 +46,18 @@ public class LoginWithInvalidDataPage {
 	}
 
 	public void enterInvalidPassword(String password) {
-		//WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(30));
+		
 		txt_password.clear();
 		txt_password.sendKeys(password);
 	}
 
 	public void loginClick()
 	{
-		 WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(20));
+		 WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(50));
 		 wait.until(ExpectedConditions.elementToBeClickable(txt_login)).click();
-		//txt_login.click();
+		
 	}
-	public void checkLoginText()
-	{
-		String ele = login_text.getCssValue("Login");
-		if (ele.toLowerCase().equalsIgnoreCase(ele)) {
-			System.out.println(ele.toUpperCase());
-			System.out.println("Login button is capitalized");
-
-		}
-	}
-
+	
 	public String invalidLoginText()
 	{
 		return invalid_login_error.getText();

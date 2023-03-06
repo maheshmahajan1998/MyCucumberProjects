@@ -9,7 +9,7 @@ import io.cucumber.junit.CucumberOptions;
 @CucumberOptions(
 		features = "src\\test\\resources\\Features\\computerDatabase.feature",glue = {"stepDefinition"},
 		monochrome = true,
-		tags = "@VerifyTheData",		
+//		tags = "@VerifyTheData",		
 		plugin = {"pretty","html:target/HtmlReports/index.html",
 				"json:target/JSONReports/report.json",
 				"junit:target/JUNITReports/report.xml"}

@@ -32,88 +32,88 @@ public class ComputerDatabase {
 	}
 
 	@And("user nevigate to computer database page")
-	public void user_nevigate_to_computer_database_page() {
+	public void nevigateToComputer_database_page() {
 		driver.get("https://computer-database.gatling.io/computers/");
 	}
 
 	@When("Verify the title as Computers database")
-	public void verify_the_title_as_computers_database() {
+	public void checkTitleAsComputersDatabase() {
 
-		verify_obj.verify_the_title_as_computers_database();
+		verify_obj.verifyTheTitle();
 	}
 
 	@And("Verify the page header is the same as the page title")
-	public void verify_the_page_header_is_the_same_as_the_page_title() {
+	public void checkPageHeaderAndPageTitle() {
 
-		verify_obj.verify_the_page_header_is_the_same_as_the_page_title();
+		verify_obj.verifyThePageHeaderIsSameAsThePage_title();
 
 	}
 
 	@Then("User must see the filter by computer name text box")
-	public void user_must_see_the_filter_by_computer_name_text_box() {
+	public void computerNamefilterByText() {
 
-		verify_obj.check_filter_by_name();
+		verify_obj.filterByNnameText();
 
 	}
 
 	@And("User able to see add a new computer button")
-	public void user_able_to_see_add_a_new_computer_button() {
+	public void addNewComputerButton() {
 
-		verify_obj.user_able_to_see_add_a_new_computer_button();
+		verify_obj.addNewComputer();
 	}
 
 	@And("User able to see the filter by name button")
-	public void user_able_to_see_the_filter_by_name_button() {
+	public void checkFilterByNameBtn() {
 
-		verify_obj.user_able_to_see_the_filter_by_name_button();
+		verify_obj.filterByNameBtn();
 	}
 
 	@And("User able to see the table and the headers as follows")
-	public void user_able_to_see_the_table_and_the_headers_as_follows() {
-		verify_obj.user_able_to_see_the_table_and_the_headers_as_follows();
+	public void checkTheTable() {
+		verify_obj.tableIsPresent();
 	}
 
 	@Then("The user should see the pagination")
-	public void the_user_should_see_the_pagination() {
-		verify_obj.the_user_should_see_the_pagination();
+	public void paginationIsPresent() {
+		verify_obj.seeThePagination();
 	}
 
 	// 2nd Scenario
 
 	@When("add a new cumputer")
-	public void add_a_new_cumputer() {
+	public void addNewCumputer() {
 		addComputer = new AddComputerPage(driver);
 		addComputer.addComputerBtn();
 	}
 
 	@And("Click on create this computer")
-	public void click_on_create_this_computer() throws InterruptedException {
+	public void clickOnCreateThisComputer()  {
 		addComputer.create_computer();
 	}
 
 	@And("User should see the red background on the computer name field")
-	public void user_should_see_the_red_background_on_the_computer_name_field() throws InterruptedException {
+	public void checkBackgroundColor() throws InterruptedException {
 
 		addComputer.backgroundColorOnComputerNameField();
 	}
 
 	@Then("Enter the computer name")
-	public void enter_the_computer_name() throws InterruptedException {
+	public void addComputerName() throws InterruptedException {
 		addComputer.computer_name();
 	}
 
 	@And("Select the company as Nokia")
-	public void select_the_company_as_nokia() throws InterruptedException {
+	public void selectTheCompany() throws InterruptedException {
 		addComputer.company_name();
 	}
 
 	@And("Submit the form")
-	public void submit_the_form() throws InterruptedException {
+	public void submitForm() throws InterruptedException {
 		addComputer.click_sumbit();
 	}
 
 	@Then("Successful message should be displayed")
-	public void successful_message_should_be_displayed() throws InterruptedException {
+	public void CheckSuccessfulMessaged() throws InterruptedException {
 		addComputer.successful();
 	}
 
@@ -124,17 +124,7 @@ public class ComputerDatabase {
 		addComputer.afterAddingcom_coumputerFoundCount();
 	}
 
-	@And("Search the created data")
-	public void search_the_created_data() throws InterruptedException {
-		search = new SearchingDataPage(driver);
-		Thread.sleep(2000);
-		search.searchAddedComputer();
-	}
-
-	@Then("result should be visible")
-	public void result_should_be_visible() {
-
-	}
+	
 	
 	@After
 	public void tearDown()
