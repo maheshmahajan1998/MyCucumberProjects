@@ -303,7 +303,7 @@ public class SouceDemoLoginPage {
 
 		// Sort the Prices in Array List using Collections class
 		// this will sort in ascending order lowest at the top and highest at the bottom
-		//Collections.sort(array_list_values_product_prices);
+		Collections.sort(array_list_values_product_prices);
 		System.out.println(array_list_values_product_prices);
 
 		int[] b = new int[array_list_values_product_prices.size()];
