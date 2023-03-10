@@ -24,7 +24,14 @@ public class VerifyHomePage {
 	public
 	WebElement dropdown_filter;
 
-	
+	@FindBy(xpath = "//option[@value='az']")
+	public
+	WebElement getDefault;
+
+	public String getDefaultDropdownText() {
+		
+		return getDefault.getText();
+	}
 	
 	
 	

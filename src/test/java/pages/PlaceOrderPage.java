@@ -46,13 +46,18 @@ public class PlaceOrderPage {
 		public
 		WebElement cancel_orderbtn;
 		
+		@FindBy(xpath = "//h2[@class='complete-header']")
+		public
+		WebElement getmeg;
+		
 		public void checkout()
 		{
 			checkout_btn.click();
 		}
 		
-		public void orderDetails()
-		{
+		public void orderDetails() throws InterruptedException
+		{ 
+			Thread.sleep(2000);
 			continue_btn.click();
 		}
 		

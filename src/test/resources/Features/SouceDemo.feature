@@ -2,7 +2,7 @@ Feature: test login functionality
 
  @InvalidCredential  
   Scenario Outline: check login with Invalid credential
-    Given browser is opened
+    #Given browser is opened
     And user is in login page
     When user enters Invalid username as <username> and password as <password>
     And user clicks on login
@@ -13,7 +13,7 @@ Feature: test login functionality
     
 @ValidCredential
   Scenario Outline: check login is successful with valid credential
-    Given browser is opened
+    #Given browser is opened
     And user is in login page
    When user enters Invalid username as <username> and password as <password>
     And Verify the login button text is capitalized
@@ -25,7 +25,7 @@ Feature: test login functionality
  
  @VerifyHomePage
   Scenario Outline: Verify the Home Page
-    Given browser is opened
+    #Given browser is opened
     And user is in login page
     When user enters Invalid username as <username> and password as <password>
     And user clicks on login
@@ -36,7 +36,7 @@ Feature: test login functionality
      
 @AddProduct
   Scenario Outline: Add Product to the Cart
-	  Given browser is opened
+	  #Given browser is opened
 	  And user is in login page
 	   When user enters Invalid username as <username> and password as <password>
 	  And user clicks on login
@@ -55,7 +55,7 @@ Feature: test login functionality
      
 @FilterData
 	Scenario Outline: Filter the data
-	  Given browser is opened
+	 # Given browser is opened
 	  And user is in login page
 	   When user enters Invalid username as <username> and password as <password>
 	  And user clicks on login
@@ -77,7 +77,7 @@ Feature: test login functionality
 	 
  @PlaceOrder
 	Scenario Outline: Place order
-	  Given browser is opened
+	  #Given browser is opened
 	  And user is in login page
 	 When user enters Invalid username as <username> and password as <password>
 	  And user clicks on login

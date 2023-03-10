@@ -1,5 +1,7 @@
 package pages;
 
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -31,6 +33,22 @@ public class FilterDataUsingDropDownPage {
 	@FindBy(xpath = "//option[@value='lohi']")
 	WebElement fetch_price;
 	
+	@FindBy(xpath ="//option[@value='lohi']")
+	public
+	WebElement fetchlowtohighprice;
+	
+	@FindBy(xpath = "//div[@class='inventory_item_price']")
+	WebElement allpricevalue;
+	
+	@FindBy(xpath = "//*[@class='inventory_item_name']")
+	public
+	List<WebElement> fetchAllproducts_text;
+	
+	@FindBy(xpath = "//*[@class='inventory_item_price']")
+	public
+	List<WebElement> fetchAllproducts_price;
+	
+	
 	public void continueShopping()
 	{
 		continue_shoppingbtn.click();
@@ -38,6 +56,13 @@ public class FilterDataUsingDropDownPage {
 	
 	public String verifyPriceSortedProperly()
 	{
-		return fetch_price.getText();	 
+		return fetch_price.getText();	
+		
 	}
+
+	public String priceFilterLowToHigh() {
+		
+		return fetchlowtohighprice.getText();
+	}
+		 
 }
