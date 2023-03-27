@@ -10,9 +10,13 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import read.ReadLogin;
+
 public class LoginPage {
 
 WebDriver driver;
+
+public ReadLogin lg;
 	
 	public LoginPage(WebDriver driver)
 	{
@@ -69,11 +73,18 @@ WebDriver driver;
 	
 	
 	public void entervalidUsername(String username) {
-		txt_username.sendKeys(username);
+		lg=new ReadLogin();
+		String uname=lg.getUserName();
+		txt_username.sendKeys(uname);
+		
+		//txt_username.sendKeys(username);
 	}
 
 	public void entervalidPassword(String password) {
-		txt_password.sendKeys(password);
+		lg=new ReadLogin();
+		String pass=lg.getUserName();
+		txt_username.sendKeys(pass);
+		//txt_password.sendKeys(password);
 	}
 	
 	

@@ -29,16 +29,17 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.github.bonigarcia.wdm.WebDriverManager;
+import io.github.bonigarcia.wdm.managers.ChromeDriverManager;
 import pages.CartPage;
 import pages.FilterDataUsingDropDownPage;
 import pages.LoginPage;
 import pages.PlaceOrderPage;
 import pages.VerifyHomePage;
+import utilities.Xls_Reader;
 
 public class SouceDemoLoginPage {
 
-	public WebDriver driver;
+	static WebDriver driver;
 	private LoginPage lg;
 	protected CartPage cartpage;
 	protected PlaceOrderPage placeOrder_obj;
@@ -53,9 +54,10 @@ public class SouceDemoLoginPage {
 	public void browser_is_opened() {
 		System.out.println("Inside Step-browser is open");
 
-		// System.setProperty("webdriver.chrome.driver",
-		// "src\\test\\resources\\driver\\chromedriver.exe");
-		driver = new EdgeDriver();
+		ChromeOptions options = new ChromeOptions();
+		System.setProperty("webdriver.chrome.driver", "src\\test\\resources\\driver\\chromedriver.exe");
+		options.addArguments("--remote-allow-origins=*");
+		driver = new ChromeDriver(options);
 
 		lg = new LoginPage(driver);
 
@@ -142,7 +144,7 @@ public class SouceDemoLoginPage {
 		String actualText = obj.getDefaultDropdownText();
 		String expected = "Name (A to Z)";
 		Assert.assertTrue("Default filter dropdown is not A-Z", actualText.equals(expected));
-		// assertEquals(actualText, expected);
+		
 
 	}
 
@@ -155,13 +157,12 @@ public class SouceDemoLoginPage {
 		cartpage.addFirstProduct();
 	}
 
-	String a;
 	int int1, b;
 
 	@And("Verify the cart badge has {int} product")
 	public void verifyCartBadgeProduct(Integer int1) {
 
-		a = cartpage.cart_badge_count.getText();
+		String a = cartpage.cart_badge_count.getText();
 		b = Integer.parseInt(a);
 		if (b == int1) {
 			System.out.println("You have " + int1 + " item in your cart");
@@ -213,114 +214,93 @@ public class SouceDemoLoginPage {
 		filter_obj.continueShopping();
 	}
 
+	int i;
+	int[] a;
+	ArrayList<Integer> list1;
+	ArrayList<Integer> list2;
 	@And("Change the price filter from low to high")
 	public void checkThePriceFilter() {
 
-		// fetching all product text
-		List<WebElement> list_of_products = filter_obj.fetchAllproducts_text;
 		List<WebElement> list_of_products_price = filter_obj.fetchAllproducts_price;
 
-		// Use of HashMaop to store Products and Their prices(after conversion to
-		// Integer)
-		String product_name;
 		String product_price;
 		int int_product_price;
-		HashMap<Integer, String> map_final_products = new HashMap<Integer, String>();
-		for (int i = 0; i < list_of_products.size(); i++) {
-			product_name = list_of_products.get(i).getText();// Iterate and fetch product name
-			product_price = list_of_products_price.get(i).getText();// Iterate and fetch product price
-			product_price = product_price.replaceAll("[^0-9]", "");// Replace anything wil space other than numbers
-			int_product_price = Integer.parseInt(product_price);// Convert to Integer
-			map_final_products.put(int_product_price, product_name);// Add product and price in HashMap
+		list1 = new ArrayList<Integer>();
+
+		for (int i = 0; i < list_of_products_price.size(); i++) {
+			product_price = list_of_products_price.get(i).getText();
+			product_price = product_price.replaceAll("[^0-9]", "");
+			int_product_price = Integer.parseInt(product_price);
+			// System.out.println(int_product_price);
+			list1.add(int_product_price);
 		}
-		// Reporter.log("Product Name and price fetched from UI and saved in HashMap
-		// as:" + map_final_products.toString() + "<br>",true);
-		// System.out.println("Product Name and price fetched from UI and saved in
-		// HashMap as:" + map_final_products.toString());
+		ArrayList<Integer> array_list_values_product_prices = new ArrayList<Integer>(list1);
 
-		// Get all the keys from Hash Map
-		Set<Integer> allkeys = map_final_products.keySet();
-		ArrayList<Integer> array_list_values_product_prices = new ArrayList<Integer>(allkeys);
-
-		// Sort the Prices in Array List using Collections class
-		// this will sort in ascending order lowest at the top and highest at the bottom
-		//Collections.sort(array_list_values_product_prices);
-		System.out.println(array_list_values_product_prices);
-
-		int[] a = new int[array_list_values_product_prices.size()];
+		a = new int[array_list_values_product_prices.size()];
 
 		for (int i = 0; i < array_list_values_product_prices.size(); i++) {
 			a[i] = array_list_values_product_prices.get(i);
+			
+			//Assert.assertSame( list2, list1);
 
 		}
 
 		// Printing using for each loop
-		for (int k : a) {
-			System.out.println(k);
-		}
-		
-		
-		
+//		for (int k : a) {
+//			System.out.println(k);
+//		}
+
+		Select selectObject;
+		WebElement dropdown = filter_obj.dropdown_filter;
+		selectObject = new Select(dropdown);
+		selectObject.selectByIndex(2);
 
 	}
 
 	@Then("Verify the price sorted properly")
 	public void checkPriceSortedProperly() {
 
-		Select selectObject;
-		WebElement dropdown = filter_obj.dropdown_filter;
-		selectObject = new Select(dropdown);
-		selectObject.selectByIndex(2);
 //		String actual = filter_obj.verifyPriceSortedProperly();
 //		String expected = "Price (low to high)";
 //		Assert.assertTrue("price not sorted properly", actual.equals(expected));
 
-		// fetching all product text
-		List<WebElement> list_of_products = filter_obj.fetchAllproducts_text;
 		List<WebElement> list_of_products_price = filter_obj.fetchAllproducts_price;
 
-		// Use of HashMaop to store Products and Their prices(after conversion to
-		// Integer)
-		String product_name;
-		String product_price1;
-		int int_product_price1;
-		HashMap<Integer, String> map_final_products = new HashMap<Integer, String>();
-		for (int i = 0; i < list_of_products.size(); i++) {
-			product_name = list_of_products.get(i).getText();// Iterate and fetch product name
-			product_price1 = list_of_products_price.get(i).getText();// Iterate and fetch product price
-			product_price1 = product_price1.replaceAll("[^0-9]", "");// Replace anything wil space other than numbers
-			int_product_price1 = Integer.parseInt(product_price1);// Convert to Integer
-			map_final_products.put(int_product_price1, product_name);// Add product and price in HashMap
+		String product_price;
+		int int_product_price;
+		 list2 = new ArrayList<Integer>();
+
+		for (int i = 0; i < list_of_products_price.size(); i++) {
+			product_price = list_of_products_price.get(i).getText();
+			product_price = product_price.replaceAll("[^0-9]", "");
+			int_product_price = Integer.parseInt(product_price);
+			// System.out.println(int_product_price);
+			list2.add(int_product_price);
 		}
-		// Reporter.log("Product Name and price fetched from UI and saved in HashMap
-		// as:" + map_final_products.toString() + "<br>",true);
-		// System.out.println("Product Name and price fetched from UI and saved in
-		// HashMap as:" + map_final_products.toString());
+		ArrayList<Integer> array_list_values_product_prices = new ArrayList<Integer>(list2);
 
-		// Get all the keys from Hash Map
-		Set<Integer> allkeys = map_final_products.keySet();
-		ArrayList<Integer> array_list_values_product_prices = new ArrayList<Integer>(allkeys);
-
-		// Sort the Prices in Array List using Collections class
-		// this will sort in ascending order lowest at the top and highest at the bottom
-		Collections.sort(array_list_values_product_prices);
-		System.out.println(array_list_values_product_prices);
-
-		int[] b = new int[array_list_values_product_prices.size()];
+		a = new int[array_list_values_product_prices.size()];
 
 		for (int i = 0; i < array_list_values_product_prices.size(); i++) {
-			b[i] = array_list_values_product_prices.get(i);
-
+			a[i] = array_list_values_product_prices.get(i);
+				
+			Assert.assertSame("price sorted properly", list2, list1);
 		}
 
-		for (int k : b) {
-			System.out.println(k);
-		}
+		// Printing using for each loop
+//		for (int k : a) {
+//			System.out.println(k);
+//			
+//		}
 
 		
-		
-		
-		
+//		for (int l : list1) {
+//			for (int m : list2) {
+//				if (l == m)
+//					break;
+//				Assert.assertEquals("not sorted",l,m);
+//			}			
+//		}
 		
 	}
 
@@ -332,14 +312,36 @@ public class SouceDemoLoginPage {
 		placeOrder_obj.checkout();
 	}
 
-	String fname, lname, code1;
+	//String fname, lname, code1;
 
 	@When("Add Checkout: Your Information")
 	public void addCheckoutInformation() {
 
-		placeOrder_obj.fistname.sendKeys("abc");
-		placeOrder_obj.lastname.sendKeys("xyz");
-		placeOrder_obj.postalcode.sendKeys("40242");
+	
+		Xls_Reader reader=new Xls_Reader("src\\test\\resources\\ExcelData\\userinfo.xlsx");
+		String sheetname="Sheet1";
+		
+		
+		int rowCount=reader.getRowCount(sheetname);
+//		System.out.println(rowCount);
+//		String data=reader.getCellData(sheetname, 0, 2);
+//		System.out.println(data);
+		for(int rowNum=2;rowNum<=rowCount;rowNum++)
+		{
+			String fname=reader.getCellData(sheetname, "firstname", rowNum);
+			String lname=reader.getCellData(sheetname, "lastname", rowNum);
+			String postcode=reader.getCellData(sheetname, "postalcode", rowNum);
+
+			
+//			System.out.println(fname+ " " + lname);
+//			System.out.println();
+//			
+			placeOrder_obj.fistname.sendKeys(fname);
+			placeOrder_obj.lastname.sendKeys(lname);
+			placeOrder_obj.postalcode.sendKeys(postcode);
+		
+		}
+		
 
 	}
 
@@ -351,10 +353,10 @@ public class SouceDemoLoginPage {
 
 	@Then("order placed")
 	public void orderPlaced() throws InterruptedException {
-		wait = new WebDriverWait(driver, Duration.ofMinutes(2));
-
-		wait.until(ExpectedConditions.elementToBeClickable(placeOrder_obj.place_orderbtn)).click();
-
+//		wait = new WebDriverWait(driver, Duration.ofMinutes(2));
+//
+//		wait.until(ExpectedConditions.elementToBeClickable(placeOrder_obj.place_orderbtn)).click();
+		placeOrder_obj.place_orderbtn.click();
 		String actuString = placeOrder_obj.getmeg.getText();
 		String expectedString = "Thank you for your order!";
 		Assert.assertTrue("Your order not placed", actuString.equals(expectedString));
@@ -363,23 +365,22 @@ public class SouceDemoLoginPage {
 	@After
 	public void tearDown() {
 		// driver.close();
-		driver.quit();
+		// driver.quit();
 	}
 
-	@After(order=1)
+	@After(order = 1)
 	public void takeScreenshotOnFailure(Scenario scenario) {
-		if(scenario.isFailed())
-		{
+		if (scenario.isFailed()) {
 			TakesScreenshot ts = (TakesScreenshot) driver;
-			 byte[] src = ts.getScreenshotAs(OutputType.BYTES);
-			 scenario.attach(src, "image/png", "screenshot");
+			byte[] src = ts.getScreenshotAs(OutputType.BYTES);
+			scenario.attach(src, "image/png", "screenshot");
 		}
-	
+
 	}
+
 	@After(order = 0)
-	public void teardoDown()
-	{
-		//driver.close();
+	public void teardoDown() {
+		driver.close();
 	}
 
 }

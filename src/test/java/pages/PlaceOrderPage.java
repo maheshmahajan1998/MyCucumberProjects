@@ -52,11 +52,13 @@ public class PlaceOrderPage {
 		
 		public void checkout()
 		{
+			
 			checkout_btn.click();
 		}
 		
 		public void orderDetails() throws InterruptedException
 		{ 
+			
 			Thread.sleep(2000);
 			continue_btn.click();
 		}
