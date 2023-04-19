@@ -100,6 +100,7 @@ public class SouceDemoLoginPage {
 	@When("user enters username as {string} and password as {string}")
 	public void enterUsername_and_password(String username, String password) {
 		lg = new LoginPage(driver);
+
 		lg.entervalidUsername(username);
 		lg.entervalidPassword(password);
 	}
@@ -144,7 +145,6 @@ public class SouceDemoLoginPage {
 		String actualText = obj.getDefaultDropdownText();
 		String expected = "Name (A to Z)";
 		Assert.assertTrue("Default filter dropdown is not A-Z", actualText.equals(expected));
-		
 
 	}
 
@@ -218,6 +218,7 @@ public class SouceDemoLoginPage {
 	int[] a;
 	ArrayList<Integer> list1;
 	ArrayList<Integer> list2;
+
 	@And("Change the price filter from low to high")
 	public void checkThePriceFilter() {
 
@@ -240,15 +241,10 @@ public class SouceDemoLoginPage {
 
 		for (int i = 0; i < array_list_values_product_prices.size(); i++) {
 			a[i] = array_list_values_product_prices.get(i);
-			
-			//Assert.assertSame( list2, list1);
+
+			// Assert.assertSame( list2, list1);
 
 		}
-
-		// Printing using for each loop
-//		for (int k : a) {
-//			System.out.println(k);
-//		}
 
 		Select selectObject;
 		WebElement dropdown = filter_obj.dropdown_filter;
@@ -260,15 +256,11 @@ public class SouceDemoLoginPage {
 	@Then("Verify the price sorted properly")
 	public void checkPriceSortedProperly() {
 
-//		String actual = filter_obj.verifyPriceSortedProperly();
-//		String expected = "Price (low to high)";
-//		Assert.assertTrue("price not sorted properly", actual.equals(expected));
-
 		List<WebElement> list_of_products_price = filter_obj.fetchAllproducts_price;
 
 		String product_price;
 		int int_product_price;
-		 list2 = new ArrayList<Integer>();
+		list2 = new ArrayList<Integer>();
 
 		for (int i = 0; i < list_of_products_price.size(); i++) {
 			product_price = list_of_products_price.get(i).getText();
@@ -283,25 +275,10 @@ public class SouceDemoLoginPage {
 
 		for (int i = 0; i < array_list_values_product_prices.size(); i++) {
 			a[i] = array_list_values_product_prices.get(i);
-				
+
 			Assert.assertSame("price sorted properly", list2, list1);
 		}
 
-		// Printing using for each loop
-//		for (int k : a) {
-//			System.out.println(k);
-//			
-//		}
-
-		
-//		for (int l : list1) {
-//			for (int m : list2) {
-//				if (l == m)
-//					break;
-//				Assert.assertEquals("not sorted",l,m);
-//			}			
-//		}
-		
 	}
 
 	// place order
@@ -312,36 +289,31 @@ public class SouceDemoLoginPage {
 		placeOrder_obj.checkout();
 	}
 
-	//String fname, lname, code1;
+	// String fname, lname, code1;
 
 	@When("Add Checkout: Your Information")
 	public void addCheckoutInformation() {
 
-	
-		Xls_Reader reader=new Xls_Reader("src\\test\\resources\\ExcelData\\userinfo.xlsx");
-		String sheetname="Sheet1";
-		
-		
-		int rowCount=reader.getRowCount(sheetname);
+		Xls_Reader reader = new Xls_Reader("src\\test\\resources\\ExcelData\\userinfo.xlsx");
+		String sheetname = "Sheet1";
+
+		int rowCount = reader.getRowCount(sheetname);
 //		System.out.println(rowCount);
 //		String data=reader.getCellData(sheetname, 0, 2);
 //		System.out.println(data);
-		for(int rowNum=2;rowNum<=rowCount;rowNum++)
-		{
-			String fname=reader.getCellData(sheetname, "firstname", rowNum);
-			String lname=reader.getCellData(sheetname, "lastname", rowNum);
-			String postcode=reader.getCellData(sheetname, "postalcode", rowNum);
+		for (int rowNum = 2; rowNum <= rowCount; rowNum++) {
+			String fname = reader.getCellData(sheetname, "firstname", rowNum);
+			String lname = reader.getCellData(sheetname, "lastname", rowNum);
+			String postcode = reader.getCellData(sheetname, "postalcode", rowNum);
 
-			
 //			System.out.println(fname+ " " + lname);
 //			System.out.println();
 //			
 			placeOrder_obj.fistname.sendKeys(fname);
 			placeOrder_obj.lastname.sendKeys(lname);
 			placeOrder_obj.postalcode.sendKeys(postcode);
-		
+
 		}
-		
 
 	}
 

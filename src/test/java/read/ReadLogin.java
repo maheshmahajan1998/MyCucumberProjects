@@ -20,33 +20,32 @@ public class ReadLogin {
 	}
 
 	public void readLoginData() {
-		JSONParser jp=new JSONParser();
-		
+		JSONParser jp = new JSONParser();
+
 		try {
-			obj=(JSONObject) jp.parse(new FileReader("JSON//login.json"));
+			obj = (JSONObject) jp.parse(new FileReader("JSON//login.json"));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
-	
-	public String getUserName()
-	{
-		uname=(String) obj.get("username");
+
+	public String getUserName() {
+		uname = (String) obj.get("username");
 		return uname;
-		
+
 	}
-	public String getPassword()
-	{
-		pass=(String) obj.get("password");
+
+	public String getPassword() {
+		pass = (String) obj.get("password");
 		return pass;
-		
+
 	}
 
 }

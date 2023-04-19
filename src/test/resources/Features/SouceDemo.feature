@@ -17,6 +17,7 @@ Feature: test login functionality
     #Given browser is opened
     And user is in login page
     When user enters Invalid username as <username> and password as <password>
+    #When user enters valid username and password 
     And Verify the login button text is capitalized
     And user clicks on login
     Then user clicks on logout
